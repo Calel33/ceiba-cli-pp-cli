@@ -1,0 +1,915 @@
+name: ceiba-cli
+description: Discovered API spec for ceibabelize
+version: 0.1.0
+base_url: https://maps.googleapis.com
+spec_source: sniffed
+auth:
+    type: api_key
+    header: key
+    format: ""
+    env_vars:
+        - CEIBABELIZE_API_KEY
+    env_var_specs:
+        - name: CEIBABELIZE_API_KEY
+          kind: per_call
+          required: true
+          sensitive: true
+          inferred: true
+    in: query
+auth_warnings:
+    - 'rejected auth candidate "per_page" from query: search input'
+config:
+    format: toml
+    path: ~/.config/ceiba-cli-pp-cli/config.toml
+resources:
+    featured_listing:
+        description: Operations on 20-acre-estate-parcel-w-waterfront-near-hopkins
+        endpoints:
+            list_20_acre_estate_parcel_w_waterfront_near_hopkins:
+                method: GET
+                path: /featured_listing/20-acre-estate-parcel-w-waterfront-near-hopkins/
+                base_url: https://ceibabelize.com
+                description: Fetch structured links from /featured_listing/20-acre-estate-parcel-w-waterfront-near-hopkins/
+                params: []
+                body: []
+                response:
+                    type: object
+                    item: html
+                response_format: html
+                html_extract:
+                    mode: page
+                    limit: 50
+                pagination: null
+    maps:
+        description: Operations on js
+        endpoints:
+            list_gen_204:
+                method: GET
+                path: /maps/api/mapsjs/gen_204
+                description: GET /maps/api/mapsjs/gen_204
+                params:
+                    - name: csp_test
+                      type: boolean
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                body: []
+                response:
+                    type: object
+                    item: gen_204
+                pagination: null
+            list_js:
+                method: GET
+                path: /maps/api/js
+                description: GET /maps/api/js
+                params:
+                    - name: libraries
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: loading
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: ver
+                      type: integer
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                body: []
+                response:
+                    type: object
+                    item: js
+                pagination: null
+    our-listing:
+        description: Operations on our-listing
+        endpoints:
+            list_our_listing:
+                method: GET
+                path: /our-listing/
+                base_url: https://ceibabelize.com
+                description: Fetch structured links from /our-listing/
+                params: []
+                body: []
+                response:
+                    type: object
+                    item: html
+                response_format: html
+                html_extract:
+                    mode: page
+                    limit: 50
+                pagination: null
+    pagead:
+        description: Operations on conversion
+        endpoints:
+            get_conversion:
+                method: GET
+                path: /pagead/conversion/{conversion_id}/
+                base_url: https://www.googleadservices.com
+                description: GET /pagead/conversion/{conversion_id}/
+                params:
+                    - name: _tu
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: async
+                      type: integer
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: auid
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: bg
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: bttype
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: category
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: conversion_id
+                      type: string
+                      required: true
+                      positional: true
+                      default: null
+                      description: The conversion_id path segment
+                      fields: []
+                    - name: cv
+                      type: integer
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: dma
+                      type: integer
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: en
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: ept
+                      type: integer
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: fmt
+                      type: integer
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: frm
+                      type: integer
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: fst
+                      type: integer
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: gcd
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: gcl_ctr
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: gtm
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: guid
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: hn
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: label
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: npa
+                      type: integer
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: pscdl
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: random
+                      type: integer
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: rcb
+                      type: integer
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: tag_exp
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: tiba
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: u_h
+                      type: integer
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: u_w
+                      type: integer
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: uaa
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: uab
+                      type: integer
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: uafvl
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: uam
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: uamb
+                      type: integer
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: uap
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: uapv
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: uaw
+                      type: integer
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: url
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: value
+                      type: integer
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                body: []
+                response:
+                    type: object
+                    item: conversion
+                pagination: null
+    wp-json:
+        description: Operations on featured_listing
+        endpoints:
+            get_media:
+                method: GET
+                path: /wp-json/wp/v2/media/{media_id}
+                base_url: https://ceibabelize.com
+                description: GET /wp-json/wp/v2/media/{media_id}
+                params:
+                    - name: media_id
+                      type: string
+                      required: true
+                      positional: true
+                      default: null
+                      description: The media_id path segment
+                      fields: []
+                body: []
+                response:
+                    type: object
+                    item: Media
+                pagination: null
+            list_development:
+                method: GET
+                path: /wp-json/wp/v2/development
+                base_url: https://ceibabelize.com
+                description: GET /wp-json/wp/v2/development
+                params:
+                    - name: per_page
+                      type: integer
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                body: []
+                response:
+                    type: array
+                    item: Development
+                pagination: null
+            list_district:
+                method: GET
+                path: /wp-json/wp/v2/district
+                base_url: https://ceibabelize.com
+                description: GET /wp-json/wp/v2/district
+                params:
+                    - name: _fields
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: per_page
+                      type: integer
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                body: []
+                response:
+                    type: array
+                    item: District
+                pagination: null
+            list_featured_listing:
+                method: GET
+                path: /wp-json/wp/v2/featured_listing
+                base_url: https://ceibabelize.com
+                description: GET /wp-json/wp/v2/featured_listing
+                params:
+                    - name: _fields
+                      type: string
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                    - name: per_page
+                      type: integer
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                body: []
+                response:
+                    type: array
+                    item: FeaturedListing
+                pagination: null
+            list_featured_tags:
+                method: GET
+                path: /wp-json/wp/v2/featured_tags
+                base_url: https://ceibabelize.com
+                description: GET /wp-json/wp/v2/featured_tags
+                params:
+                    - name: per_page
+                      type: integer
+                      required: false
+                      positional: false
+                      default: null
+                      description: ""
+                      fields: []
+                body: []
+                response:
+                    type: array
+                    item: FeaturedTag
+                pagination: null
+types:
+    About:
+        fields:
+            - name: href
+              type: string
+              format: url
+    About2:
+        fields:
+            - name: href
+              type: string
+              format: url
+    About3:
+        fields:
+            - name: href
+              type: string
+              format: url
+    Author:
+        fields:
+            - name: embeddable
+              type: bool
+            - name: href
+              type: string
+              format: url
+    Caption:
+        fields:
+            - name: rendered
+              type: string
+    Collection:
+        fields:
+            - name: href
+              type: string
+              format: url
+    Collection2:
+        fields:
+            - name: href
+              type: string
+              format: url
+    Collection3:
+        fields:
+            - name: href
+              type: string
+              format: url
+    Content:
+        fields:
+            - name: protected
+              type: bool
+            - name: rendered
+              type: string
+    Cury:
+        fields:
+            - name: href
+              type: string
+              format: url
+            - name: name
+              type: string
+            - name: templated
+              type: bool
+    Cury2:
+        fields:
+            - name: href
+              type: string
+              format: url
+            - name: name
+              type: string
+            - name: templated
+              type: bool
+    Cury3:
+        fields:
+            - name: href
+              type: string
+              format: url
+            - name: name
+              type: string
+            - name: templated
+              type: bool
+    Description:
+        fields:
+            - name: rendered
+              type: string
+    Development:
+        fields:
+            - name: _links
+              type: ref:Links2
+            - name: acf
+              type: array
+            - name: class_list
+              type: array
+            - name: content
+              type: ref:Content
+            - name: date
+              type: string
+            - name: date_gmt
+              type: string
+            - name: featured_media
+              type: integer
+            - name: guid
+              type: ref:Guid
+            - name: id
+              type: integer
+            - name: link
+              type: string
+              format: url
+            - name: modified
+              type: string
+            - name: modified_gmt
+              type: string
+            - name: slug
+              type: string
+            - name: status
+              type: string
+            - name: template
+              type: string
+            - name: title
+              type: ref:Title2
+            - name: type
+              type: string
+    District:
+        fields:
+            - name: count
+              type: integer
+            - name: id
+              type: integer
+            - name: name
+              type: string
+            - name: parent
+              type: integer
+            - name: slug
+              type: string
+    FeaturedListing:
+        fields:
+            - name: district
+              type: array
+            - name: featured_media
+              type: integer
+            - name: featured_tags
+              type: array
+            - name: id
+              type: integer
+            - name: list_category
+              type: array
+            - name: modified
+              type: string
+            - name: slug
+              type: string
+            - name: title
+              type: ref:Title
+    FeaturedTag:
+        fields:
+            - name: _links
+              type: ref:Links
+            - name: acf
+              type: array
+            - name: count
+              type: integer
+            - name: description
+              type: string
+            - name: id
+              type: integer
+            - name: link
+              type: string
+              format: url
+            - name: meta
+              type: array
+            - name: name
+              type: string
+            - name: parent
+              type: integer
+            - name: slug
+              type: string
+            - name: taxonomy
+              type: string
+    Guid:
+        fields:
+            - name: rendered
+              type: string
+              format: url
+    Guid2:
+        fields:
+            - name: rendered
+              type: string
+              format: url
+    ImageMeta:
+        fields:
+            - name: alt
+              type: string
+            - name: aperture
+              type: string
+            - name: camera
+              type: string
+            - name: caption
+              type: string
+            - name: copyright
+              type: string
+            - name: created_timestamp
+              type: string
+            - name: credit
+              type: string
+            - name: focal_length
+              type: string
+            - name: iso
+              type: string
+            - name: keywords
+              type: array
+            - name: orientation
+              type: string
+            - name: shutter_speed
+              type: string
+            - name: title
+              type: string
+    Links:
+        fields:
+            - name: about
+              type: '[]ref:About'
+            - name: collection
+              type: '[]ref:Collection'
+            - name: curies
+              type: '[]ref:Cury'
+            - name: self
+              type: '[]ref:Self'
+            - name: wp:post_type
+              type: '[]ref:WpPostType'
+    Links2:
+        fields:
+            - name: about
+              type: '[]ref:About2'
+            - name: collection
+              type: '[]ref:Collection2'
+            - name: curies
+              type: '[]ref:Cury2'
+            - name: self
+              type: '[]ref:Self2'
+            - name: wp:attachment
+              type: '[]ref:WpAttachment'
+            - name: wp:featuredmedia
+              type: '[]ref:WpFeaturedmedia'
+    Links3:
+        fields:
+            - name: about
+              type: '[]ref:About3'
+            - name: author
+              type: '[]ref:Author'
+            - name: collection
+              type: '[]ref:Collection3'
+            - name: curies
+              type: '[]ref:Cury3'
+            - name: replies
+              type: '[]ref:Reply'
+            - name: self
+              type: '[]ref:Self3'
+            - name: wp:attached-to
+              type: '[]ref:WpAttachedTo'
+    Media:
+        fields:
+            - name: _links
+              type: ref:Links3
+            - name: acf
+              type: array
+            - name: alt_text
+              type: string
+            - name: author
+              type: integer
+            - name: caption
+              type: ref:Caption
+            - name: class_list
+              type: array
+            - name: comment_status
+              type: string
+            - name: date
+              type: string
+            - name: date_gmt
+              type: string
+            - name: description
+              type: ref:Description
+            - name: featured_media
+              type: integer
+            - name: filename
+              type: string
+            - name: filesize
+              type: integer
+            - name: guid
+              type: ref:Guid2
+            - name: id
+              type: integer
+            - name: link
+              type: string
+              format: url
+            - name: media_details
+              type: ref:MediaDetails
+            - name: media_type
+              type: string
+            - name: meta
+              type: ref:Meta
+            - name: mime_type
+              type: string
+            - name: modified
+              type: string
+            - name: modified_gmt
+              type: string
+            - name: ping_status
+              type: string
+            - name: post
+              type: integer
+            - name: slug
+              type: string
+            - name: source_url
+              type: string
+              format: url
+            - name: status
+              type: string
+            - name: template
+              type: string
+            - name: title
+              type: ref:Title3
+            - name: type
+              type: string
+    MediaDetails:
+        fields:
+            - name: file
+              type: string
+            - name: filesize
+              type: integer
+            - name: height
+              type: integer
+            - name: image_meta
+              type: ref:ImageMeta
+            - name: sizes
+              type: ref:Sizes
+            - name: width
+              type: integer
+    Meta:
+        fields:
+            - name: _acf_changed
+              type: bool
+    Reply:
+        fields:
+            - name: embeddable
+              type: bool
+            - name: href
+              type: string
+              format: url
+    Self:
+        fields:
+            - name: href
+              type: string
+              format: url
+            - name: targetHints
+              type: object
+    Self2:
+        fields:
+            - name: href
+              type: string
+              format: url
+            - name: targetHints
+              type: object
+    Self3:
+        fields:
+            - name: href
+              type: string
+              format: url
+            - name: targetHints
+              type: object
+    Sizes:
+        fields:
+            - name: 1536x1536
+              type: object
+            - name: 2048x2048
+              type: object
+            - name: full
+              type: object
+            - name: large
+              type: object
+            - name: medium
+              type: object
+            - name: medium_large
+              type: object
+            - name: thumbnail
+              type: object
+    Title:
+        fields:
+            - name: rendered
+              type: string
+    Title2:
+        fields:
+            - name: rendered
+              type: string
+    Title3:
+        fields:
+            - name: rendered
+              type: string
+    WpAttachedTo:
+        fields:
+            - name: embeddable
+              type: bool
+            - name: href
+              type: string
+              format: url
+            - name: id
+              type: integer
+            - name: post_type
+              type: string
+    WpAttachment:
+        fields:
+            - name: href
+              type: string
+              format: url
+    WpFeaturedmedia:
+        fields:
+            - name: embeddable
+              type: bool
+            - name: href
+              type: string
+              format: url
+    WpPostType:
+        fields:
+            - name: href
+              type: string
+              format: url

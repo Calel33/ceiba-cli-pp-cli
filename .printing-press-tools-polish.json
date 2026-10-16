@@ -1,0 +1,9 @@
+{
+  "timestamp": "2026-10-16T15:25:53.1790047Z",
+  "cli_dir": "\u003ccli-dir\u003e\\ceiba-cli-pp-cli",
+  "findings": null,
+  "scorecard_before": {
+    "mcp_description_quality": 10,
+    "captured": "2026-10-16T15:22:28.1910236Z"
+  }
+}

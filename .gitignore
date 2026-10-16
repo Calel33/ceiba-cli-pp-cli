@@ -1,0 +1,11 @@
+# Root-anchored so cmd/<binary>/ source stays tracked.
+/ceiba-cli-pp-cli
+/ceiba-cli-pp-cli.exe
+/ceiba-cli-pp-mcp
+/ceiba-cli-pp-mcp.exe
+/bin/
+/build/
+/dist/
+
+# graft's local graph cache — regenerable, not committed (run `graft build`).
+/graft/

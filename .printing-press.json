@@ -1,0 +1,105 @@
+{
+  "schema_version": 2,
+  "generated_at": "2026-10-16T16:59:55.1654007Z",
+  "printing_press_version": "4.33.5",
+  "api_name": "ceiba-cli",
+  "display_name": "Ceiba Realty",
+  "cli_name": "ceiba-cli-pp-cli",
+  "creator": {
+    "handle": "Calel33"
+  },
+  "owner": "calel33",
+  "printer": "Calel33",
+  "spec_path": "spec.yaml",
+  "spec_format": "internal",
+  "spec_source": "sniffed",
+  "spec_checksum": "sha256:c461ec10bc40a5842f67b7fcf74782f7dedef77afd1200529fa3e9df34178eb1",
+  "run_id": "20261016-071158-0adbf4c2",
+  "category": "other",
+  "description": "All 84 Ceiba listings offline, with market math, comps, and change tracking over a local mirror.",
+  "mcp_binary": "ceiba-cli-pp-mcp",
+  "mcp_tool_count": 9,
+  "mcp_public_tool_count": 9,
+  "mcp_ready": "full",
+  "api_version": "0.1.0",
+  "auth_type": "none",
+  "novel_features": [
+    {
+      "name": "Change digest",
+      "command": "changes",
+      "description": "See new listings, price drops, and status flips since a prior sync — a Saturday-morning scan of the whole catalog."
+    },
+    {
+      "name": "Price-per-acre leaderboard",
+      "command": "value",
+      "description": "Rank budget-filtered listings by price per acre, cheapest first."
+    },
+    {
+      "name": "Side-by-side compare",
+      "command": "compare",
+      "description": "Aligned feature table for 2-4 named listings in one call."
+    },
+    {
+      "name": "Comparables with deltas",
+      "command": "comps",
+      "description": "Nearest peer listings for one property, with price and per-acre deltas; sold comps opt-in."
+    },
+    {
+      "name": "District market report",
+      "command": "market",
+      "description": "Counts, median price, median price per acre, and status mix for a district and its towns."
+    },
+    {
+      "name": "Mirror coverage report",
+      "command": "coverage",
+      "description": "Per-field fill rates across mirrored listings so operators know which answers the mirror can currently support."
+    }
+  ],
+  "novel_features_built": [
+    {
+      "name": "Change digest",
+      "command": "changes",
+      "description": "See new listings, price drops, and status flips since a prior sync — a Saturday-morning scan of the whole catalog."
+    },
+    {
+      "name": "Price-per-acre leaderboard",
+      "command": "value",
+      "description": "Rank budget-filtered listings by price per acre, cheapest first."
+    },
+    {
+      "name": "Side-by-side compare",
+      "command": "compare",
+      "description": "Aligned feature table for 2-4 named listings in one call."
+    },
+    {
+      "name": "Comparables with deltas",
+      "command": "comps",
+      "description": "Nearest peer listings for one property, with price and per-acre deltas; sold comps opt-in."
+    },
+    {
+      "name": "District market report",
+      "command": "market",
+      "description": "Counts, median price, median price per acre, and status mix for a district and its towns."
+    },
+    {
+      "name": "Mirror coverage report",
+      "command": "coverage",
+      "description": "Per-field fill rates across mirrored listings so operators know which answers the mirror can currently support."
+    }
+  ],
+  "verify": {
+    "mode": "mock",
+    "pass_rate": 100,
+    "passed": 45,
+    "total": 45,
+    "data_pipeline": true,
+    "verdict": "PASS"
+  },
+  "scorecard": {
+    "steinberger": {
+      "percentage": 97,
+      "grade": "A",
+      "total": 97
+    }
+  }
+}

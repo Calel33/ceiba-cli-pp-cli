@@ -1,0 +1,260 @@
+{
+  "api_name": "ceiba-cli",
+  "base_url": "https://ceibabelize.com",
+  "description": "All 84 Ceiba listings offline, with market math, comps, and change tracking over a local mirror.",
+  "mcp_ready": "full",
+  "http_transport": "standard",
+  "auth": {
+    "type": "none"
+  },
+  "required_headers": [
+    {
+      "name": "User-Agent",
+      "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
+    },
+    {
+      "name": "Accept",
+      "value": "application/json, text/html;q=0.9, */*;q=0.8"
+    }
+  ],
+  "tools": [
+    {
+      "name": "development_get",
+      "description": "Get one development by WordPress post ID. Required: id. Returns the Development.",
+      "method": "GET",
+      "path": "/wp-json/wp/v2/development/{id}",
+      "no_auth": true,
+      "params": [
+        {
+          "name": "id",
+          "type": "integer",
+          "location": "path",
+          "description": "WordPress post ID",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "development_list",
+      "description": "List developments. Optional: per_page (default: 100), page. Returns array of Development.",
+      "method": "GET",
+      "path": "/wp-json/wp/v2/development",
+      "no_auth": true,
+      "params": [
+        {
+          "name": "per_page",
+          "type": "integer",
+          "location": "query",
+          "description": "Developments per page (WordPress max 100)"
+        },
+        {
+          "name": "page",
+          "type": "integer",
+          "location": "query",
+          "description": "Page number (1-based)"
+        }
+      ]
+    },
+    {
+      "name": "district_list",
+      "description": "List district and town terms (parent 0-style district parents 47-52; towns as children). Optional: per_page (default: 100), fields, page. Returns array of District.",
+      "method": "GET",
+      "path": "/wp-json/wp/v2/district",
+      "no_auth": true,
+      "params": [
+        {
+          "name": "per_page",
+          "type": "integer",
+          "location": "query",
+          "description": "Terms per page (WordPress max 100)"
+        },
+        {
+          "name": "fields",
+          "wire_name": "_fields",
+          "type": "string",
+          "location": "query",
+          "description": "Restrict returned fields (id,name,slug,count,parent)"
+        },
+        {
+          "name": "page",
+          "type": "integer",
+          "location": "query",
+          "description": "Page number (1-based); the district taxonomy has 106 terms, so page 2 completes the list"
+        }
+      ]
+    },
+    {
+      "name": "featured-listing_get",
+      "description": "Get one listing by WordPress post ID (title, slug, description content, taxonomies, media reference). Required: id. Returns the FeaturedListing.",
+      "method": "GET",
+      "path": "/wp-json/wp/v2/featured_listing/{id}",
+      "no_auth": true,
+      "params": [
+        {
+          "name": "id",
+          "type": "integer",
+          "location": "path",
+          "description": "WordPress post ID",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "featured-listing_list",
+      "description": "List Ceiba listings (search, sort, and taxonomy-ID filters; all 84 fit in one per_page=100 page). Optional: per_page (default: 100), page, search (plus 6 more). Returns array of FeaturedListing.",
+      "method": "GET",
+      "path": "/wp-json/wp/v2/featured_listing",
+      "no_auth": true,
+      "params": [
+        {
+          "name": "per_page",
+          "type": "integer",
+          "location": "query",
+          "description": "Listings per page (WordPress max 100)"
+        },
+        {
+          "name": "page",
+          "type": "integer",
+          "location": "query",
+          "description": "Page number (1-based)"
+        },
+        {
+          "name": "search",
+          "type": "string",
+          "location": "query",
+          "description": "Keyword search across listing title and content"
+        },
+        {
+          "name": "fields",
+          "wire_name": "_fields",
+          "type": "string",
+          "location": "query",
+          "description": "Restrict returned fields (WordPress _fields, comma-separated)"
+        },
+        {
+          "name": "orderby",
+          "type": "string",
+          "location": "query",
+          "description": "Sort field"
+        },
+        {
+          "name": "order",
+          "type": "string",
+          "location": "query",
+          "description": "Sort direction"
+        },
+        {
+          "name": "district",
+          "type": "integer",
+          "location": "query",
+          "description": "District/town taxonomy term ID (parent IDs 47-52 are districts; children are towns; see district list)"
+        },
+        {
+          "name": "featured_tags",
+          "type": "integer",
+          "location": "query",
+          "description": "Status tag term ID to require (31=Ceiba Spotlight, 32=Under Contract; see featured-tag list)"
+        },
+        {
+          "name": "featured_tags_exclude",
+          "type": "integer",
+          "location": "query",
+          "description": "Status tag term ID to exclude (30 excludes Sold listings)"
+        }
+      ]
+    },
+    {
+      "name": "featured-tag_list",
+      "description": "List status tags with term IDs and counts. Optional: per_page (default: 100), page. Returns array of FeaturedTag.",
+      "method": "GET",
+      "path": "/wp-json/wp/v2/featured_tags",
+      "no_auth": true,
+      "params": [
+        {
+          "name": "per_page",
+          "type": "integer",
+          "location": "query",
+          "description": "Terms per page (WordPress max 100)"
+        },
+        {
+          "name": "page",
+          "type": "integer",
+          "location": "query",
+          "description": "Page number (1-based)"
+        }
+      ]
+    },
+    {
+      "name": "listing-page_detail",
+      "description": "Fetch a listing detail page's extracted content and links (price, specs, gallery, map, similar listings live in the page HTML). Required: slug. Returns the html.",
+      "method": "GET",
+      "path": "/featured_listing/{slug}/",
+      "no_auth": true,
+      "params": [
+        {
+          "name": "slug",
+          "type": "string",
+          "location": "path",
+          "description": "Listing slug (from featured-listing list)",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "listing-page_our-listing",
+      "description": "Extract listing-card links from the Our Listings page. Returns the html.",
+      "method": "GET",
+      "path": "/our-listing/",
+      "no_auth": true,
+      "params": []
+    },
+    {
+      "name": "media_get",
+      "description": "Get one media item (source_url, alt text, dimensions). Required: media_id. Returns the Media.",
+      "method": "GET",
+      "path": "/wp-json/wp/v2/media/{media_id}",
+      "no_auth": true,
+      "params": [
+        {
+          "name": "media_id",
+          "type": "integer",
+          "location": "path",
+          "description": "Media item ID",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "novel_features": [
+    {
+      "name": "Change digest",
+      "command": "changes",
+      "description": "See new listings, price drops, and status flips since a prior sync — a Saturday-morning scan of the whole catalog."
+    },
+    {
+      "name": "Price-per-acre leaderboard",
+      "command": "value",
+      "description": "Rank budget-filtered listings by price per acre, cheapest first."
+    },
+    {
+      "name": "Side-by-side compare",
+      "command": "compare",
+      "description": "Aligned feature table for 2-4 named listings in one call."
+    },
+    {
+      "name": "Comparables with deltas",
+      "command": "comps",
+      "description": "Nearest peer listings for one property, with price and per-acre deltas; sold comps opt-in."
+    },
+    {
+      "name": "District market report",
+      "command": "market",
+      "description": "Counts, median price, median price per acre, and status mix for a district and its towns."
+    },
+    {
+      "name": "Mirror coverage report",
+      "command": "coverage",
+      "description": "Per-field fill rates across mirrored listings so operators know which answers the mirror can currently support."
+    }
+  ]
+}

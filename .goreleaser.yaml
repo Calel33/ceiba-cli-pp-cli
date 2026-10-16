@@ -1,0 +1,55 @@
+version: 2
+project_name: ceiba-cli-pp-cli
+changelog:
+  disable: true
+builds:
+  - id: ceiba-cli-pp-cli
+    main: ./cmd/ceiba-cli-pp-cli
+    binary: ceiba-cli-pp-cli
+    env:
+      - CGO_ENABLED=0
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w -X ceiba-cli-pp-cli/internal/cli.version={{ .Version }}
+    targets:
+      - darwin_amd64
+      - darwin_arm64
+      - linux_amd64
+      - linux_arm64
+      - windows_amd64
+      - windows_arm64
+  - id: ceiba-cli-pp-mcp
+    main: ./cmd/ceiba-cli-pp-mcp
+    binary: ceiba-cli-pp-mcp
+    env:
+      - CGO_ENABLED=0
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w -X main.version={{ .Version }}
+    targets:
+      - darwin_amd64
+      - darwin_arm64
+      - linux_amd64
+      - linux_arm64
+      - windows_amd64
+      - windows_arm64
+archives:
+  - formats: [tar.gz]
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+checksum:
+  name_template: checksums.txt
+brews:
+  - name: ceiba-cli-pp-cli
+    repository:
+      owner: calel33
+      name: homebrew-tap
+    homepage: "https://github.com/calel33/ceiba-cli-pp-cli"
+    description: "All 84 Ceiba listings offline, with market math, comps, and change tracking over a local mirror."
+    install: |
+      bin.install "ceiba-cli-pp-cli"
+      bin.install "ceiba-cli-pp-mcp"

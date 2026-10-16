@@ -1,0 +1,9 @@
+{
+  "dir": "\u003ccli-dir\u003e\\ceiba-cli-pp-cli",
+  "research_dir": "\u003ccli-dir\u003e\\20261016-071158-0adbf4c2",
+  "verdict": "pass",
+  "actors": null,
+  "issues": [
+    "no Apify actor references found, skipping"
+  ]
+}

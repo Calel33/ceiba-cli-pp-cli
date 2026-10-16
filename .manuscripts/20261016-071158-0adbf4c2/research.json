@@ -1,0 +1,260 @@
+{
+  "api_name": "ceiba-cli",
+  "novelty_score": 7,
+  "alternatives": [
+    {
+      "name": "wordpress-pp-cli",
+      "url": "https://github.com/mvanhorn/printing-press-library/tree/main/library/developer-tools/wordpress",
+      "language": "Go",
+      "install_method": "",
+      "stars": 0,
+      "last_updated": "",
+      "command_count": 3,
+      "has_json_output": false,
+      "has_auth_support": false
+    },
+    {
+      "name": "propertyfinder-scraper",
+      "url": "https://github.com/Dory168/propertyfinder-scraper",
+      "language": "Python",
+      "install_method": "",
+      "stars": 0,
+      "last_updated": "",
+      "command_count": 3,
+      "has_json_output": false,
+      "has_auth_support": false
+    },
+    {
+      "name": "wpklx",
+      "url": "https://github.com/KLIXPERT-io/wpklx",
+      "language": "TypeScript",
+      "install_method": "",
+      "stars": 0,
+      "last_updated": "",
+      "command_count": 2,
+      "has_json_output": false,
+      "has_auth_support": false
+    },
+    {
+      "name": "wp-json-scraper",
+      "url": "https://github.com/MickaelWalter/wp-json-scraper",
+      "language": "Python",
+      "install_method": "",
+      "stars": 0,
+      "last_updated": "",
+      "command_count": 2,
+      "has_json_output": false,
+      "has_auth_support": false
+    },
+    {
+      "name": "property_web_scraper",
+      "url": "https://github.com/RealEstateWebTools/property_web_scraper",
+      "language": "Ruby",
+      "install_method": "",
+      "stars": 0,
+      "last_updated": "",
+      "command_count": 2,
+      "has_json_output": false,
+      "has_auth_support": false
+    }
+  ],
+  "gaps": [],
+  "patterns": [],
+  "recommendation": "proceed",
+  "researched_at": "2026-10-16T11:25:00Z",
+  "novel_features": [
+    {
+      "name": "Change digest",
+      "command": "changes",
+      "description": "See new listings, price drops, and status flips since a prior sync — a Saturday-morning scan of the whole catalog.",
+      "rationale": "Requires local snapshot history across syncs; the WordPress API serves only current state.",
+      "example": "ceiba-cli-pp-cli changes --since 7d --agent",
+      "why_it_matters": "Reach for this when someone asks what is new or changed instead of re-reading all 84 cards.",
+      "group": "Market intelligence"
+    },
+    {
+      "name": "Price-per-acre leaderboard",
+      "command": "value",
+      "description": "Rank budget-filtered listings by price per acre, cheapest first.",
+      "rationale": "Computes price divided by acres across the mirror; the site shows the two figures separately and never divides.",
+      "example": "ceiba-cli-pp-cli value --district cayo --max-price 250000 --agent",
+      "why_it_matters": "Use it when a user cares about land value per acre, not asking price alone.",
+      "group": "Market intelligence"
+    },
+    {
+      "name": "Side-by-side compare",
+      "command": "compare",
+      "description": "Aligned feature table for 2-4 named listings in one call.",
+      "rationale": "One local join replaces several show round-trips and emits an aligned comparison no single API call provides.",
+      "example": "ceiba-cli-pp-cli compare 20-acre-estate-parcel-w-waterfront-near-hopkins a-unique-treehouse-perched-atop-the-macal-river --agent",
+      "why_it_matters": "Use it when the user names a specific set of listings to weigh against each other.",
+      "group": "Agent-native workspace"
+    },
+    {
+      "name": "Comparables with deltas",
+      "command": "comps",
+      "description": "Nearest peer listings for one property, with price and per-acre deltas; sold comps opt-in.",
+      "rationale": "Local peer scoring over stored fields; the site's similar-listings grid is editorial and carries no numbers.",
+      "example": "ceiba-cli-pp-cli comps 20-acre-estate-parcel-w-waterfront-near-hopkins --include-sold --agent",
+      "why_it_matters": "Use it before pricing or offers to ground one property against its market.",
+      "group": "Market intelligence"
+    },
+    {
+      "name": "District market report",
+      "command": "market",
+      "description": "Counts, median price, median price per acre, and status mix for a district and its towns.",
+      "rationale": "Percentile statistics plus the synced district/child-town hierarchy; no WordPress endpoint aggregates.",
+      "example": "ceiba-cli-pp-cli market --district cayo --agent",
+      "why_it_matters": "Use it for regional summaries before drilling into individual listings.",
+      "group": "Market intelligence"
+    },
+    {
+      "name": "Mirror coverage report",
+      "command": "coverage",
+      "description": "Per-field fill rates across mirrored listings so operators know which answers the mirror can currently support.",
+      "rationale": "COUNT-based audit over scraped columns surfaces exactly which captured fields are missing.",
+      "example": "ceiba-cli-pp-cli coverage --agent",
+      "why_it_matters": "Run it after a sync to know which questions the local mirror can answer today.",
+      "group": "Agent-native workspace"
+    }
+  ],
+  "novel_features_built": [
+    {
+      "name": "Change digest",
+      "command": "changes",
+      "description": "See new listings, price drops, and status flips since a prior sync — a Saturday-morning scan of the whole catalog.",
+      "rationale": "Requires local snapshot history across syncs; the WordPress API serves only current state.",
+      "example": "ceiba-cli-pp-cli changes --since 7d --agent",
+      "why_it_matters": "Reach for this when someone asks what is new or changed instead of re-reading all 84 cards.",
+      "group": "Market intelligence"
+    },
+    {
+      "name": "Price-per-acre leaderboard",
+      "command": "value",
+      "description": "Rank budget-filtered listings by price per acre, cheapest first.",
+      "rationale": "Computes price divided by acres across the mirror; the site shows the two figures separately and never divides.",
+      "example": "ceiba-cli-pp-cli value --district cayo --max-price 250000 --agent",
+      "why_it_matters": "Use it when a user cares about land value per acre, not asking price alone.",
+      "group": "Market intelligence"
+    },
+    {
+      "name": "Side-by-side compare",
+      "command": "compare",
+      "description": "Aligned feature table for 2-4 named listings in one call.",
+      "rationale": "One local join replaces several show round-trips and emits an aligned comparison no single API call provides.",
+      "example": "ceiba-cli-pp-cli compare 20-acre-estate-parcel-w-waterfront-near-hopkins a-unique-treehouse-perched-atop-the-macal-river --agent",
+      "why_it_matters": "Use it when the user names a specific set of listings to weigh against each other.",
+      "group": "Agent-native workspace"
+    },
+    {
+      "name": "Comparables with deltas",
+      "command": "comps",
+      "description": "Nearest peer listings for one property, with price and per-acre deltas; sold comps opt-in.",
+      "rationale": "Local peer scoring over stored fields; the site's similar-listings grid is editorial and carries no numbers.",
+      "example": "ceiba-cli-pp-cli comps 20-acre-estate-parcel-w-waterfront-near-hopkins --include-sold --agent",
+      "why_it_matters": "Use it before pricing or offers to ground one property against its market.",
+      "group": "Market intelligence"
+    },
+    {
+      "name": "District market report",
+      "command": "market",
+      "description": "Counts, median price, median price per acre, and status mix for a district and its towns.",
+      "rationale": "Percentile statistics plus the synced district/child-town hierarchy; no WordPress endpoint aggregates.",
+      "example": "ceiba-cli-pp-cli market --district cayo --agent",
+      "why_it_matters": "Use it for regional summaries before drilling into individual listings.",
+      "group": "Market intelligence"
+    },
+    {
+      "name": "Mirror coverage report",
+      "command": "coverage",
+      "description": "Per-field fill rates across mirrored listings so operators know which answers the mirror can currently support.",
+      "rationale": "COUNT-based audit over scraped columns surfaces exactly which captured fields are missing.",
+      "example": "ceiba-cli-pp-cli coverage --agent",
+      "why_it_matters": "Run it after a sync to know which questions the local mirror can answer today.",
+      "group": "Agent-native workspace"
+    }
+  ],
+  "narrative": {
+    "display_name": "Ceiba Realty",
+    "headline": "All 84 Ceiba listings offline, with market math, comps, and change tracking over a local mirror.",
+    "value_prop": "ceiba-cli mirrors the full Ceiba Realty catalog — land, farms, homes, islands and developments — into local SQLite, then answers with structured one-call commands: filtered search, complete detail payloads, price-per-acre rankings, district market reports, comparables, and what-changed digests. Sold listings stay hidden by default, and payloads carry their source (live or local) plus freshness metadata where the mirror tracks it.",
+    "quickstart": [
+      {
+        "command": "ceiba-cli-pp-cli doctor --dry-run",
+        "comment": "Verify the CLI installs and the Ceiba source is reachable before fetching anything."
+      },
+      {
+        "command": "ceiba-cli-pp-cli sync",
+        "comment": "Mirror all 84 listings, districts, developments, and media metadata into local SQLite."
+      },
+      {
+        "command": "ceiba-cli-pp-cli listings --query \"river\" --district cayo --max-price 200000",
+        "comment": "Budget-filtered search across the mirror; sold listings stay hidden by default."
+      },
+      {
+        "command": "ceiba-cli-pp-cli show 100-acre-investment-property-on-the-belize-river-in-the-cayo-district",
+        "comment": "One complete payload: USD/BZD pricing, specs, gallery, map, brochure, and similar listings."
+      },
+      {
+        "command": "ceiba-cli-pp-cli value --max-price 250000",
+        "comment": "Rank budget listings by price per acre — math the website never shows."
+      }
+    ],
+    "troubleshoots": [
+      {
+        "symptom": "403 or 406 responses from the site",
+        "fix": "Run ceiba-cli-pp-cli doctor — the site's ModSecurity gate requires browser-like headers; doctor reports when the block resurfaces."
+      },
+      {
+        "symptom": "Search returns nothing after a first run",
+        "fix": "Run ceiba-cli-pp-cli sync --full to rebuild the mirror, then re-run the search."
+      },
+      {
+        "symptom": "An expected sold listing never appears",
+        "fix": "Sold listings are hidden by design; add --include-sold to the search."
+      },
+      {
+        "symptom": "Fields like map coordinates or listing IDs are empty for some listings",
+        "fix": "Run ceiba-cli-pp-cli coverage to see fill rates; the site itself omits these on some listings."
+      }
+    ],
+    "when_to_use": "Use this CLI whenever the task is about Belize property inventory from Ceiba Realty: finding listings by budget, acreage, district or lifestyle; answering detailed questions about a specific property; comparing candidates; sizing up comps; or catching up on what changed. It is the right tool for chat assistants and agents that need structured answers without scraping Elementor pages. Commands answer from the local mirror, so run `sync` after install and again later — `changes` needs at least two syncs to report what moved.",
+    "anti_triggers": [
+      "Do not use this CLI to submit interest, contact, or preferences forms — it is read-only and stores no PII.",
+      "Do not use it to download or cache images; it returns absolute URLs for hot-linking.",
+      "Do not use it for blogs, region guides, giveaways, or property-map geo-bounds queries — out of scope in v0.1.",
+      "Do not use it as a general WordPress admin client; only the public Ceiba listing surfaces are modeled."
+    ],
+    "recipes": [
+      {
+        "title": "Saturday market scan",
+        "command": "ceiba-cli-pp-cli changes --since 7d",
+        "explanation": "New listings, price drops, and status flips since last week's sync."
+      },
+      {
+        "title": "Comps for a pricing memo",
+        "command": "ceiba-cli-pp-cli comps 20-acre-estate-parcel-w-waterfront-near-hopkins --include-sold",
+        "explanation": "Nearest peer listings with price and per-acre deltas, sold comps included."
+      },
+      {
+        "title": "District market report",
+        "command": "ceiba-cli-pp-cli market --district cayo",
+        "explanation": "Counts, median price, median price per acre, and status mix for Cayo and its towns."
+      },
+      {
+        "title": "Token-tight listing scan for agents",
+        "command": "ceiba-cli-pp-cli search \"investment\" --type featured_listing --agent --select id,title,price_usd,acres",
+        "explanation": "Projected JSON keeps a many-hit scan inside a small token budget."
+      }
+    ],
+    "trigger_phrases": [
+      "find land in Cayo under 150k",
+      "Belize property search",
+      "what is new on Ceiba listings",
+      "compare these properties",
+      "price per acre in Belize",
+      "use ceiba-cli",
+      "run ceiba-cli"
+    ]
+  }
+}

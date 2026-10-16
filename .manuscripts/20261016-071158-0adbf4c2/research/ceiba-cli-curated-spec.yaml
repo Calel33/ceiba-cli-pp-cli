@@ -1,0 +1,786 @@
+name: ceiba-cli
+description: "Ceiba Realty (ceibabelize.com) Belize real-estate listings — search listings, complete property detail, developments, and recent sales over a local SQLite mirror."
+version: "0.1.0"
+category: other
+base_url: https://ceibabelize.com
+http_transport: standard
+health_check_path: /wp-json/wp/v2/featured_listing
+required_headers:
+  - name: User-Agent
+    value: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
+  - name: Accept
+    value: "application/json, text/html;q=0.9, */*;q=0.8"
+
+auth:
+  type: none
+
+config:
+  format: toml
+  path: "~/.config/ceiba-cli-pp-cli/config.toml"
+
+cache:
+  enabled: true
+  stale_after: 168h
+
+learn:
+  entity_lookup_seeds:
+    district:
+      - canonical: Cayo
+        aliases: [cayo district]
+      - canonical: Belize
+        aliases: [belize district]
+      - canonical: Corozal District
+        aliases: [corozal]
+      - canonical: Orange Walk
+        aliases: [orange walk district]
+      - canonical: Stann Creek
+        aliases: [stann creek district]
+      - canonical: Toledo
+        aliases: [toledo district]
+    town:
+      - canonical: San Ignacio Town
+        aliases: [san ignacio]
+      - canonical: Santa Elena Town
+        aliases: [santa elena]
+      - canonical: Bullet Tree Falls
+        aliases: [bullet tree]
+      - canonical: Benque Viejo del Carmen
+        aliases: [benque]
+      - canonical: Hattieville
+        aliases: [hattie ville]
+      - canonical: San Pedro Town
+        aliases: [san pedro, ambergris caye]
+      - canonical: Hopkins
+        aliases: [hopkins village]
+      - canonical: Placencia
+        aliases: [placencia village]
+      - canonical: Corozal Town
+        aliases: [corozal town center]
+      - canonical: Spanish Lookout
+        aliases: [spanish lookout town]
+      - canonical: Mountain Pine Ridge
+        aliases: [pine ridge]
+      - canonical: Belmopan
+        aliases: [belmopan city]
+      - canonical: Dangriga
+        aliases: [dangriga town]
+      - canonical: Punta Gorda
+        aliases: [punta gorda town]
+    property_type:
+      - canonical: Farm
+        aliases: [farmland]
+      - canonical: Ranch
+        aliases: [ranches]
+      - canonical: Ranchette
+        aliases: [rachette]
+      - canonical: Homestead
+        aliases: [homesteads]
+      - canonical: Riverfront
+        aliases: [riverfront property]
+      - canonical: Oceanfront
+        aliases: [ocean front]
+      - canonical: Beach
+        aliases: [beachfront]
+      - canonical: Creekfront
+        aliases: [creek front]
+      - canonical: Lagoonfront
+        aliases: [lagoon front]
+      - canonical: Gated Community
+        aliases: [gated]
+      - canonical: Subdivision
+        aliases: [subdivision lot]
+      - canonical: Town Lots
+        aliases: [town lot]
+      - canonical: Apartment
+        aliases: [apartments]
+      - canonical: Single Family Home
+        aliases: [home, house, single family]
+      - canonical: Townhouses
+        aliases: [townhouse]
+      - canonical: Villa
+        aliases: [villas]
+    status:
+      - canonical: Ceiba Spotlight
+        aliases: [spotlight, featured listing]
+      - canonical: Under Contract
+        aliases: [under contract, pending]
+      - canonical: Sold
+        aliases: [sold out, sold listing]
+    development:
+      - canonical: Hopkins Grove
+        aliases: [hopkins grove development]
+      - canonical: Emeri Village
+        aliases: [emeri]
+      - canonical: Serendipity Hills
+        aliases: [serendipity]
+      - canonical: Riverpoint Estates
+        aliases: [river point estates]
+      - canonical: Native Luxury Living
+        aliases: [native luxury]
+      - canonical: Xunan Vista
+        aliases: [xunan vista estate]
+  ticker_patterns:
+    - "^4hm[0-9]{3,6}$"
+  synonyms:
+    "beach front": "beachfront"
+    "river front": "riverfront"
+    "lagoon front": "lagoonfront"
+    "creek front": "creekfront"
+    "ocean front": "oceanfront"
+
+resources:
+  featured-listing:
+    description: "Ceiba featured listings (WP REST featured_listing; sold excluded via featured_tags_exclude=30)"
+    endpoints:
+      list:
+        method: GET
+        path: /wp-json/wp/v2/featured_listing
+        description: "List Ceiba listings (search, sort, and taxonomy-ID filters; all 84 fit in one per_page=100 page)"
+        example: "  ceiba-cli-pp-cli featured-listing list --per-page 100 --orderby modified --order desc"
+        params:
+          - name: per_page
+            type: integer
+            required: false
+            positional: false
+            default: 100
+            description: "Listings per page (WordPress max 100)"
+          - name: page
+            type: integer
+            required: false
+            positional: false
+            description: "Page number (1-based)"
+          - name: search
+            type: string
+            required: false
+            positional: false
+            description: "Keyword search across listing title and content"
+          - name: _fields
+            flag_name: fields
+            type: string
+            required: false
+            positional: false
+            description: "Restrict returned fields (WordPress _fields, comma-separated)"
+          - name: orderby
+            type: string
+            required: false
+            positional: false
+            default: null
+            enum: [date, modified, title, id]
+            description: "Sort field"
+          - name: order
+            type: string
+            required: false
+            positional: false
+            default: desc
+            enum: [asc, desc]
+            description: "Sort direction"
+          - name: district
+            type: integer
+            required: false
+            positional: false
+            description: "District/town taxonomy term ID (parent IDs 47-52 are districts; children are towns; see district list)"
+          - name: featured_tags
+            type: integer
+            required: false
+            positional: false
+            description: "Status tag term ID to require (31=Ceiba Spotlight, 32=Under Contract; see featured-tag list)"
+          - name: featured_tags_exclude
+            type: integer
+            required: false
+            positional: false
+            description: "Status tag term ID to exclude (30 excludes Sold listings)"
+        response:
+          type: array
+          item: FeaturedListing
+      get:
+        method: GET
+        path: /wp-json/wp/v2/featured_listing/{id}
+        description: "Get one listing by WordPress post ID (title, slug, description content, taxonomies, media reference)"
+        example: "  ceiba-cli-pp-cli featured-listing get 20400"
+        params:
+          - name: id
+            type: integer
+            required: true
+            positional: true
+            description: "WordPress post ID"
+        response:
+          type: object
+          item: FeaturedListing
+  district:
+    description: "District/town taxonomy terms (106 hierarchical location terms on featured_listing)"
+    endpoints:
+      list:
+        method: GET
+        path: /wp-json/wp/v2/district
+        description: "List district and town terms (parent 0-style district parents 47-52; towns as children)"
+        params:
+          - name: per_page
+            type: integer
+            required: false
+            positional: false
+            default: 100
+            description: "Terms per page (WordPress max 100)"
+          - name: _fields
+            flag_name: fields
+            type: string
+            required: false
+            positional: false
+            description: "Restrict returned fields (id,name,slug,count,parent)"
+          - name: page
+            type: integer
+            required: false
+            positional: false
+            description: "Page number (1-based); the district taxonomy has 106 terms, so page 2 completes the list"
+        response:
+          type: array
+          item: District
+  featured-tag:
+    description: "Status taxonomy terms (ceiba-spotlight=31, under-contract=32, sold=30)"
+    endpoints:
+      list:
+        method: GET
+        path: /wp-json/wp/v2/featured_tags
+        description: "List status tags with term IDs and counts"
+        params:
+          - name: per_page
+            type: integer
+            required: false
+            positional: false
+            default: 100
+            description: "Terms per page (WordPress max 100)"
+          - name: page
+            type: integer
+            required: false
+            positional: false
+            description: "Page number (1-based)"
+        response:
+          type: array
+          item: FeaturedTag
+  development:
+    description: "Our Developments — pre-built communities (6 items)"
+    endpoints:
+      list:
+        method: GET
+        path: /wp-json/wp/v2/development
+        description: "List developments"
+        params:
+          - name: per_page
+            type: integer
+            required: false
+            positional: false
+            default: 100
+            description: "Developments per page (WordPress max 100)"
+          - name: page
+            type: integer
+            required: false
+            positional: false
+            description: "Page number (1-based)"
+        response:
+          type: array
+          item: Development
+      get:
+        method: GET
+        path: /wp-json/wp/v2/development/{id}
+        description: "Get one development by WordPress post ID"
+        example: "  ceiba-cli-pp-cli development get 19412"
+        params:
+          - name: id
+            type: integer
+            required: true
+            positional: true
+            description: "WordPress post ID"
+        response:
+          type: object
+          item: Development
+  media:
+    description: "WordPress media items (featured images and attachments)"
+    endpoints:
+      get:
+        method: GET
+        path: /wp-json/wp/v2/media/{media_id}
+        description: "Get one media item (source_url, alt text, dimensions)"
+        example: "  ceiba-cli-pp-cli media 20403"
+        params:
+          - name: media_id
+            type: integer
+            required: true
+            positional: true
+            description: "Media item ID"
+        response:
+          type: object
+          item: Media
+  listing-page:
+    description: "HTML listing surfaces (server-rendered Elementor pages)"
+    endpoints:
+      our-listing:
+        method: GET
+        path: /our-listing/
+        description: "Extract listing-card links from the Our Listings page"
+        response:
+          type: object
+          item: html
+        response_format: html
+        html_extract:
+          mode: links
+          link_prefixes:
+            - /featured_listing
+      detail:
+        method: GET
+        path: /featured_listing/{slug}/
+        description: "Fetch a listing detail page's extracted content and links (price, specs, gallery, map, similar listings live in the page HTML)"
+        example: "  ceiba-cli-pp-cli listing-page detail 20-acre-estate-parcel-w-waterfront-near-hopkins"
+        params:
+          - name: slug
+            type: string
+            required: true
+            positional: true
+            description: "Listing slug (from featured-listing list)"
+        response:
+          type: object
+          item: html
+        response_format: html
+        html_extract:
+          mode: page
+
+types:
+    About:
+        fields:
+            - name: href
+              type: string
+              format: url
+    About2:
+        fields:
+            - name: href
+              type: string
+              format: url
+    About3:
+        fields:
+            - name: href
+              type: string
+              format: url
+    Author:
+        fields:
+            - name: embeddable
+              type: bool
+            - name: href
+              type: string
+              format: url
+    Caption:
+        fields:
+            - name: rendered
+              type: string
+    Collection:
+        fields:
+            - name: href
+              type: string
+              format: url
+    Collection2:
+        fields:
+            - name: href
+              type: string
+              format: url
+    Collection3:
+        fields:
+            - name: href
+              type: string
+              format: url
+    Content:
+        fields:
+            - name: protected
+              type: bool
+            - name: rendered
+              type: string
+    Cury:
+        fields:
+            - name: href
+              type: string
+              format: url
+            - name: name
+              type: string
+            - name: templated
+              type: bool
+    Cury2:
+        fields:
+            - name: href
+              type: string
+              format: url
+            - name: name
+              type: string
+            - name: templated
+              type: bool
+    Cury3:
+        fields:
+            - name: href
+              type: string
+              format: url
+            - name: name
+              type: string
+            - name: templated
+              type: bool
+    Description:
+        fields:
+            - name: rendered
+              type: string
+    Development:
+        fields:
+            - name: _links
+              type: ref:Links2
+            - name: acf
+              type: array
+            - name: class_list
+              type: array
+            - name: content
+              type: ref:Content
+            - name: date
+              type: string
+            - name: date_gmt
+              type: string
+            - name: featured_media
+              type: integer
+            - name: guid
+              type: ref:Guid
+            - name: id
+              type: integer
+            - name: link
+              type: string
+              format: url
+            - name: modified
+              type: string
+            - name: modified_gmt
+              type: string
+            - name: slug
+              type: string
+            - name: status
+              type: string
+            - name: template
+              type: string
+            - name: title
+              type: ref:Title2
+            - name: type
+              type: string
+    District:
+        fields:
+            - name: count
+              type: integer
+            - name: id
+              type: integer
+            - name: name
+              type: string
+            - name: parent
+              type: integer
+            - name: slug
+              type: string
+    FeaturedListing:
+        fields:
+            - name: date
+              type: string
+            - name: date_gmt
+              type: string
+            - name: featured_media
+              type: integer
+            - name: guid
+              type: ref:Guid
+            - name: id
+              type: integer
+            - name: link
+              type: string
+              format: url
+            - name: modified
+              type: string
+            - name: modified_gmt
+              type: string
+            - name: slug
+              type: string
+            - name: status
+              type: string
+            - name: title
+              type: ref:Title
+            - name: type
+              type: string
+            - name: content
+              type: ref:Content
+            - name: class_list
+              type: array
+            - name: list_category
+              type: array
+            - name: featured_tags
+              type: array
+            - name: district
+              type: array
+            - name: template
+              type: string
+            - name: acf
+              type: array
+            - name: _links
+              type: ref:Links2
+    FeaturedTag:
+        fields:
+            - name: _links
+              type: ref:Links
+            - name: acf
+              type: array
+            - name: count
+              type: integer
+            - name: description
+              type: string
+            - name: id
+              type: integer
+            - name: link
+              type: string
+              format: url
+            - name: meta
+              type: array
+            - name: name
+              type: string
+            - name: parent
+              type: integer
+            - name: slug
+              type: string
+            - name: taxonomy
+              type: string
+    Guid:
+        fields:
+            - name: rendered
+              type: string
+              format: url
+    Guid2:
+        fields:
+            - name: rendered
+              type: string
+              format: url
+    ImageMeta:
+        fields:
+            - name: alt
+              type: string
+            - name: aperture
+              type: string
+            - name: camera
+              type: string
+            - name: caption
+              type: string
+            - name: copyright
+              type: string
+            - name: created_timestamp
+              type: string
+            - name: credit
+              type: string
+            - name: focal_length
+              type: string
+            - name: iso
+              type: string
+            - name: keywords
+              type: array
+            - name: orientation
+              type: string
+            - name: shutter_speed
+              type: string
+            - name: title
+              type: string
+    Links:
+        fields:
+            - name: about
+              type: '[]ref:About'
+            - name: collection
+              type: '[]ref:Collection'
+            - name: curies
+              type: '[]ref:Cury'
+            - name: self
+              type: '[]ref:Self'
+            - name: wp:post_type
+              type: '[]ref:WpPostType'
+    Links2:
+        fields:
+            - name: about
+              type: '[]ref:About2'
+            - name: collection
+              type: '[]ref:Collection2'
+            - name: curies
+              type: '[]ref:Cury2'
+            - name: self
+              type: '[]ref:Self2'
+            - name: wp:attachment
+              type: '[]ref:WpAttachment'
+            - name: wp:featuredmedia
+              type: '[]ref:WpFeaturedmedia'
+    Links3:
+        fields:
+            - name: about
+              type: '[]ref:About3'
+            - name: author
+              type: '[]ref:Author'
+            - name: collection
+              type: '[]ref:Collection3'
+            - name: curies
+              type: '[]ref:Cury3'
+            - name: replies
+              type: '[]ref:Reply'
+            - name: self
+              type: '[]ref:Self3'
+            - name: wp:attached-to
+              type: '[]ref:WpAttachedTo'
+    Media:
+        fields:
+            - name: _links
+              type: ref:Links3
+            - name: acf
+              type: array
+            - name: alt_text
+              type: string
+            - name: author
+              type: integer
+            - name: caption
+              type: ref:Caption
+            - name: class_list
+              type: array
+            - name: comment_status
+              type: string
+            - name: date
+              type: string
+            - name: date_gmt
+              type: string
+            - name: description
+              type: ref:Description
+            - name: featured_media
+              type: integer
+            - name: filename
+              type: string
+            - name: filesize
+              type: integer
+            - name: guid
+              type: ref:Guid2
+            - name: id
+              type: integer
+            - name: link
+              type: string
+              format: url
+            - name: media_details
+              type: ref:MediaDetails
+            - name: media_type
+              type: string
+            - name: meta
+              type: ref:Meta
+            - name: mime_type
+              type: string
+            - name: modified
+              type: string
+            - name: modified_gmt
+              type: string
+            - name: ping_status
+              type: string
+            - name: post
+              type: integer
+            - name: slug
+              type: string
+            - name: source_url
+              type: string
+              format: url
+            - name: status
+              type: string
+            - name: template
+              type: string
+            - name: title
+              type: ref:Title3
+            - name: type
+              type: string
+    MediaDetails:
+        fields:
+            - name: file
+              type: string
+            - name: filesize
+              type: integer
+            - name: height
+              type: integer
+            - name: image_meta
+              type: ref:ImageMeta
+            - name: sizes
+              type: ref:Sizes
+            - name: width
+              type: integer
+    Meta:
+        fields:
+            - name: _acf_changed
+              type: bool
+    Reply:
+        fields:
+            - name: embeddable
+              type: bool
+            - name: href
+              type: string
+              format: url
+    Self:
+        fields:
+            - name: href
+              type: string
+              format: url
+            - name: targetHints
+              type: object
+    Self2:
+        fields:
+            - name: href
+              type: string
+              format: url
+            - name: targetHints
+              type: object
+    Self3:
+        fields:
+            - name: href
+              type: string
+              format: url
+            - name: targetHints
+              type: object
+    Sizes:
+        fields:
+            - name: 1536x1536
+              type: object
+            - name: 2048x2048
+              type: object
+            - name: full
+              type: object
+            - name: large
+              type: object
+            - name: medium
+              type: object
+            - name: medium_large
+              type: object
+            - name: thumbnail
+              type: object
+    Title:
+        fields:
+            - name: rendered
+              type: string
+    Title2:
+        fields:
+            - name: rendered
+              type: string
+    Title3:
+        fields:
+            - name: rendered
+              type: string
+    WpAttachedTo:
+        fields:
+            - name: embeddable
+              type: bool
+            - name: href
+              type: string
+              format: url
+            - name: id
+              type: integer
+            - name: post_type
+              type: string
+    WpAttachment:
+        fields:
+            - name: href
+              type: string
+              format: url
+    WpFeaturedmedia:
+        fields:
+            - name: embeddable
+              type: bool
+            - name: href
+              type: string
+              format: url
+    WpPostType:
+        fields:
+            - name: href
+              type: string
+              format: url

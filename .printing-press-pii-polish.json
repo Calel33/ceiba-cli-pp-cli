@@ -1,0 +1,40 @@
+{
+  "timestamp": "2026-10-16T16:59:46.073927Z",
+  "cli_dir": "\u003ccli-dir\u003e\\ceiba-cli-pp-cli",
+  "findings": [
+    {
+      "kind": "email",
+      "file": "graft/.cache/extract.c3679fb5d24a63a0.json",
+      "line": 1,
+      "column": 1137458,
+      "matched_span": "a@2x.jpg",
+      "status": "accepted",
+      "note": "Not an email address: '@2x' is a retina/DPI asset suffix inside an image srcset URL. Cache copy of a Go doc comment in generated internal/cli/html_extract.go, not customer data.",
+      "category": "other",
+      "evidence_context": "graft/.cache copies internal/cli/html_extract.go's srcset doc comment (html_extract.go:441: \"//\t\"https://x.com/a.jpg 1x, https://x.com/a@2x.jpg 2x\"\"). The '@' is part of the @2x filename suffix; no email address exists in the source."
+    },
+    {
+      "kind": "email",
+      "file": "graft/.cache/extract.c3679fb5d24a63a0.json",
+      "line": 1,
+      "column": 5132559,
+      "matched_span": "support+urgent@example.co.uk",
+      "status": "accepted",
+      "note": "PII-rule test fixture in an audit-exempt *_test.go file; example.co.uk is an RFC-2606 reserved documentation domain. Only the gitignored graft cache copy is flagged.",
+      "category": "synthetic_placeholder",
+      "evidence_context": "Source is internal/learn/recall_test.go:892 (generated, audit-exempt test file): {\"email with plus tag\", \"tickets from support+urgent@example.co.uk\", []string{PIIRuleEmail}} — a fixture exercising the email detector's plus-tag handling."
+    },
+    {
+      "kind": "email",
+      "file": "graft/.cache/extract.c3679fb5d24a63a0.json",
+      "line": 1,
+      "column": 5132904,
+      "matched_span": "a@b.io",
+      "status": "accepted",
+      "note": "PII-rule test fixture in an audit-exempt *_test.go file. Only the gitignored graft cache copy is flagged.",
+      "category": "documentation_example",
+      "evidence_context": "Source is internal/learn/recall_test.go:896 (generated, audit-exempt test file): {\"both\", \"email a@b.io or call 555-123-4567\", []string{PIIRuleEmail, PIIRulePhone}} — a placeholder email+phone pair used to exercise the combined detector."
+    }
+  ],
+  "findings_count_before": 3
+}
